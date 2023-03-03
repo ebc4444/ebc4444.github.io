@@ -1,0 +1,251 @@
+<!DOCTYPE html>
+<head>
+ <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.4.1/jquery.min.js"></script>
+
+<link href="https://fonts.googleapis.com/css2?family=Averia+Sans+Libre:ital,wght@1,300&family=Uncial+Antiqua&family=Vast+Shadow&display=swap" rel="stylesheet"><style>
+body {
+  font-family: 'Averia Sans Libre', cursive;
+  margin: 0 auto;
+  max-width: 600px;
+  background: #204D16;
+  color: #5A5959;
+}
+div {
+  height: 200px;
+  background-size: cover;
+  position: relative;
+  margin: 40px 0 0 0;
+  border-radius: 12px;
+  color: #5A5959;
+}
+h1 {
+  font-family: 'Vast Shadow', cursive;
+  text-align: center;
+  font-size: 75px;
+  color: #FC38CA;
+  margin: 60px 0 0 0;
+}
+h2 {
+  font-family: 'Uncial Antiqua', cursive;
+  text-align: center;
+  color: #FC38CA;
+  margin: 0px 0 70px 0;
+}
+p {
+  color: #7BFA5F;
+  background: black;
+  background: linear-gradient(bottom, rgba(0,0,0,1), rgba(0,0,0,.4));
+  background: -webkit-linear-gradient(bottom, rgba(111,53,37,1), rgba(111,53,37,.4));
+  background: -moz-linear-gradient(bottom, rgba(0,0,0,1), rgba(0,0,0,.4));
+  padding: 10px;
+  line-height: 28px;
+  text-align: justify;
+  position: absolute;
+  bottom: 0;
+  margin: 0;
+  height: 30px;
+  transition: height .5s;
+  -webkit-transition: height .5s;
+  -moz-transition: height .5s;
+}
+
+small {
+  opacity: 0;
+}
+
+.show-description p {
+  height: 150px;
+}
+
+.show-description small {
+  opacity: 1;
+}
+
+.first{
+  background-image: url("https://www.jocooks.com/wp-content/uploads/2019/10/coconut-chicken-curry-1-10-500x375.jpg");
+}
+.second{
+  background-image: url("https://whisk-res.cloudinary.com/image/upload/g_auto,g_auto,c_fill,q_60,f_auto,h_600,w_800/v1601755298/recipe/69d88336c00fa3b4182a933ddea3a6a6.jpg");
+}
+.dessert{
+  background-image: url("https://imagevars.gulfnews.com/2022/08/04/Mishti-Doi_18268325df3_medium.jpg");
+}
+.price {
+  float: right;
+}
+@media (max-width: 500px) {
+  h1 {
+    font-size: 50px;
+    margin-top: 20px;
+    line-height: 40px;
+  }
+  h2 {
+    font-size: 20px;
+    margin: 20px 0 30px 0;
+  }
+  div {
+    margin: 20px 12px 0 12px;
+  }
+  p {
+    font-size: 20px;
+    line-height: 24px;
+  }
+  small {
+    font-size: 16px;
+  }
+}
+input {
+	font-size: 22px;
+}
+
+</style>
+
+</head>
+
+<body>
+<h1>Eshika's restaurant</h1>
+<h2>Bengali Food</h2>
+<div class="first">
+	<input class="quantities" type="number"  min="0" style="width: 50px">
+  <p>Curry<span class="price">$10</span><br />
+  <small>A curry is a dish with a sauce seasoned with spices, mainly associated with South Asian cuisine. In southern India, leaves from the curry tree may be included. There are many varieties of curry. </small></p>
+</div>
+
+<div class="second">
+	<input class="quantities" type="number" min="0" style="width: 50px">
+  <p>Dal<span class="price">$12</span><br />
+  <small>In south-Asian cuisine, dal are dried, split pulses that do not require soaking before cooking. India is the largest producer of pulses in the world. The term is also used for various soups prepared from these pulses.</small></p>
+</div>
+  
+<div class="dessert">
+	<input class="quantities" type="number" min="0" style="width: 50px">
+  <p>Doi<span class="price">$5</span><br />
+  <small>Mishti doi or Mitha Dahi is a fermented sweet dahi originating from the Bogra District in Bangladesh and is a very popular dessert throughout the country.</small></p>
+</div>
+<br><br>
+  <input id="Name" type="email" placeholder= "Your name">
+  <input id="Email" type="email" placeholder = "Your email">
+  <input id="submit" type="submit">
+  <br><br> 
+  
+<script>
+	
+  $('div').on('click', function() {
+      $(this).toggleClass('show-description');
+  });
+  </script>
+  
+  
+<script type="module">
+  // Import the functions you need from the SDKs you need
+  import { initializeApp } from "https://www.gstatic.com/firebasejs/9.14.0/firebase-app.js";
+  import { getDatabase, ref, set } from "https://www.gstatic.com/firebasejs/9.14.0/firebase-database.js";
+  
+  // TODO: Add SDKs for Firebase products that you want to use
+  // https://firebase.google.com/docs/web/setup#available-libraries
+
+  // Your web app's Firebase configuration
+  const firebaseConfig = {
+    apiKey: "AIzaSyBudJukFBGuRq3q3VzvT8xKR0wE1JXcOu4",
+    authDomain: "eshikac3-e0c0c.firebaseapp.com",
+    projectId: "eshikac3-e0c0c",
+    storageBucket: "eshikac3-e0c0c.appspot.com",
+    messagingSenderId: "136234214715",
+    appId: "1:136234214715:web:b6b9fd08d36f25fa4fc31e"
+  };
+
+  // Initialize Firebase
+  const app = initializeApp(firebaseConfig);
+  const db = getDatabase(app); 
+  
+
+
+const Name = document.querySelector("#Name") 
+const Email = document.querySelector("#Email")
+document.querySelector('#submit').addEventListener('click', Submit)
+const quantities = document.querySelectorAll(".quantities") 
+const itemsList = ["Curry", "Dal", "Doi"] 
+const prices = document.querySelectorAll(".price")  
+ 
+ 
+function Submit() {
+  const timestamp = buildTimestamp()
+  let total = 0
+	let cart = { }
+	for  (let i=0; i<quantities.length; i=i+1) {
+		if (quantities[i].value != "0" && quantities[i].value != "") {
+			  let price = prices[i].innerHTML.replace('$', '')
+			  total = total + quantities[i].value * price 	
+			cart[itemsList[i]] = parseInt(quantities[i].value) 
+		}
+		quantities[i].value = ""
+	}
+  
+  set(ref(db, timestamp), {
+	  Name: Name.value,
+      email: Email.value,
+	   cart: cart,
+		  totalPrice: total,
+		  paid: "not yet",
+
+	  
+  });
+  
+  
+  Name.value = ""
+  Email.value = ""
+  
+  
+}
+
+
+
+
+
+
+
+function buildTimestamp() {
+	  const now = new Date();
+	  let timestamp = now.getFullYear().toString() + "/";
+	  //const month = now.toLocaleString('default', { month: 'long' });
+
+	  let month = now.getMonth()+1   //add 1 because Javascript uses 0 for January
+	  month = month.toString()
+	  month = addLeadingZero(month)
+	  timestamp += month + "/"; 
+
+	  let date = now.getDate().toString()
+	  date = addLeadingZero(date)
+	  timestamp += date + "/";
+
+	  let hours = now.getHours().toString()
+	  hours = addLeadingZero(hours)
+	  timestamp += hours + ":";
+
+	  let minutes = now.getMinutes().toString()
+	  minutes = addLeadingZero(minutes)
+	  timestamp += minutes + ":";
+
+	  let seconds = now.getSeconds().toString()
+	  seconds = addLeadingZero(seconds)
+	  timestamp += seconds;
+  
+	  return timestamp
+	}
+ 
+ 
+ 
+
+	function addLeadingZero(units) {
+			if (units.length < 2) {
+				units = "0" + units
+			}
+			return units
+		}
+ 
+  
+  
+
+</script>
+
+</body>
